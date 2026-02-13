@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 541370f (docs: update README to reflect application features, development challenges, and solutions)
 
 # Smart Bookmark App
 
