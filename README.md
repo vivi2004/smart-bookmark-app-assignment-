@@ -63,29 +63,29 @@ A modern, real-time bookmark management application built with Next.js and Supab
 
 ## ✨ Key Features
 
-### 🔐 Secure Authentication
+###  Secure Authentication
 - **Google OAuth Only**: No email/password authentication
 - **Session Management**: Persistent user sessions with automatic token refresh
 - **Protected Routes**: Middleware-based route protection
 
-### 📚 Bookmark Management
+###  Bookmark Management
 - **CRUD Operations**: Create, read, update, and delete bookmarks
 - **Private Data**: Each user sees only their own bookmarks
 - **Metadata Support**: Title, URL, description, and category tags
 - **Search & Filter**: Real-time search and category-based filtering
 
-### ⚡ Real-time Features
+###  Real-time Features
 - **Live Synchronization**: Changes appear instantly across all open tabs
 - **Conflict Resolution**: Optimistic updates with automatic rollback on errors
 - **Real-time Subscriptions**: PostgreSQL change notifications via Supabase
 
-### 🎨 Modern UI/UX
+###  Modern UI/UX
 - **Responsive Design**: Mobile-first approach with desktop optimization
 - **Dark Mode Support**: System preference detection with manual toggle
 - **Accessibility**: ARIA labels, keyboard navigation, screen reader support
 - **Micro-interactions**: Smooth animations and loading states
 
-## 🏗 Architecture
+##  Architecture
 
 ### Database Schema
 ```sql
@@ -134,7 +134,7 @@ const channel = supabase
   .subscribe()
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 18+ 
@@ -178,7 +178,7 @@ const channel = supabase
    
    Open [http://localhost:3000](http://localhost:3000)
 
-## 🧪 Testing
+##  Testing
 
 ### Manual Testing Checklist
 
@@ -206,7 +206,7 @@ const channel = supabase
 - [ ] Loading states and error handling
 - [ ] Accessibility features (keyboard navigation, screen readers)
 
-## 🔧 Development
+##  Development
 
 ### Project Structure
 ```
@@ -240,7 +240,7 @@ npm run lint         # Run ESLint
 npm run type-check   # Run TypeScript compiler
 ```
 
-## 🚀 Deployment
+##  Deployment
 
 ### Vercel (Recommended)
 1. Push code to GitHub repository
@@ -257,7 +257,7 @@ npm run type-check   # Run TypeScript compiler
 2. Add Vercel URL to Google OAuth redirect URIs
 3. Test live application functionality
 
-## 🐛 Troubleshooting
+##   Troubleshooting
 
 ### Common Issues & Solutions
 
@@ -282,7 +282,7 @@ npm run type-check   # Run TypeScript compiler
 - Check environment variables are properly configured
 - Ensure Supabase CORS settings allow your domain
 
-## 📈 Performance Optimizations
+##   Performance Optimizations
 
 - **Code Splitting**: Automatic route-based code splitting
 - **Image Optimization**: Next.js Image component for lazy loading
@@ -290,7 +290,7 @@ npm run type-check   # Run TypeScript compiler
 - **Caching**: Supabase edge caching for frequently accessed data
 - **Bundle Analysis**: Regular bundle size monitoring
 
-## 🔒 Security Features
+##  Security Features
 
 - **Row Level Security**: Database-level access control
 - **JWT Authentication**: Secure token-based authentication
@@ -299,7 +299,7 @@ npm run type-check   # Run TypeScript compiler
 - **Input Validation**: Client and server-side validation
 - **SQL Injection Prevention**: Parameterized queries via Supabase
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -307,11 +307,11 @@ npm run type-check   # Run TypeScript compiler
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - [Supabase](https://supabase.com) for the amazing backend-as-a-service platform
 - [Next.js](https://nextjs.org) for the React framework
@@ -320,4 +320,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for the full-stack development assignment**
+**Built with me for the full-stack development assignment**
