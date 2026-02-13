@@ -215,30 +215,6 @@ npm run type-check   # Run TypeScript compiler
 
 ### Common Issues & Solutions
 
-#### OAuth Redirect Errors
-**Problem**: Authentication fails with redirect mismatch
-**Solution**:
-- Ensure Vercel domain is added to Supabase Auth settings
-- Verify Google Cloud Console has correct redirect URIs
-- Check environment variables are correctly set
-
-#### Real-time Not Working
-**Problem**: Changes don't sync across tabs
-**Solution**:
-- Verify RLS policies include `SELECT` permissions
-- Ensure Realtime is enabled for the bookmarks table
-- Check browser console for WebSocket connection errors
-
-#### CORS Issues
-**Problem**: API calls blocked by browser
-**Solution**:
-- Verify Supabase project URL is correct
-- Check environment variables are properly configured
-- Ensure Supabase CORS settings allow your domain
-
-
-
-# � Development Challenges & Solutions
 
 ### 1. OAuth Callback Configuration Issues
 **Problem**: Initially used a custom `/auth/callback` route with `exchangeCodeForSession`, which caused "Authentication Error" pages and session inconsistencies.
