@@ -289,7 +289,7 @@ export const supabase = createBrowserClient(
 - **Mobile-First Approach**: Responsive design should be considered from the start, not added as an afterthought
 - **Performance Monitoring**: Regular performance testing prevents user experience degradation
 
-## �📈 Performance Optimizations
+##  Performance Optimizations
 
 - **Code Splitting**: Automatic route-based code splitting
 - **Image Optimization**: Next.js Image component for lazy loading
@@ -297,7 +297,7 @@ export const supabase = createBrowserClient(
 - **Caching**: Supabase edge caching for frequently accessed data
 - **Bundle Analysis**: Regular bundle size monitoring
 
-## 🔒 Security Features
+##  Security Features
 
 - **Row Level Security**: Database-level access control
 - **JWT Authentication**: Secure token-based authentication
