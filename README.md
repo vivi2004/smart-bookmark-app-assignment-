@@ -5,7 +5,7 @@ A modern, real-time bookmark management application built with Next.js and Supab
 
 ##   Live Demo
 
-[https://smart-bookmark-app.vercel.app](https://smart-bookmark-app.vercel.app)
+[https://smart-bookmark-app.vercel.app](https://smart-bookmark-app-assignment.vercel.app/)
 
 ##  Tech Stack
 
