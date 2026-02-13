@@ -213,62 +213,160 @@ npm run type-check   # Run TypeScript compiler
 
 ##   Troubleshooting
 
-### Common Issues & Solutions
 
 
-### 1. OAuth Callback Configuration Issues
-**Problem**: Initially used a custom `/auth/callback` route with `exchangeCodeForSession`, which caused "Authentication Error" pages and session inconsistencies.
+#  Challenges Faced & Solutions
 
-**Solution**: Simplified the authentication flow by letting Supabase handle the entire OAuth exchange automatically. Removed custom callback route and allowed Supabase to redirect directly back to the dashboard. This eliminated session management complexity and reduced authentication errors by 100%.
+##  OAuth Callback Configuration Issues
 
-### 2. Row Level Security (RLS) Not Working
-**Problem**: Users could see each other's bookmarks despite implementing RLS policies. The policies were correctly written but weren't being enforced.
+### Problem
 
-**Solution**: Discovered that RLS wasn't enabled on the bookmarks table. Fixed by running `ALTER TABLE bookmarks ENABLE ROW LEVEL SECURITY;`. Also learned that RLS policies must be explicit for each operation (SELECT, INSERT, UPDATE, DELETE) - a single policy doesn't cover all operations.
+Initially used a custom `/auth/callback` route with `exchangeCodeForSession`, which caused **Authentication Error pages** and session inconsistencies.
 
-### 3. Real-time Subscriptions Not Firing
-**Problem**: Database changes weren't triggering real-time updates across browser tabs. No errors in console, but subscriptions remained silent.
+### Solution
 
-**Solution**: Found two root causes:
-1. **Replication Not Enabled**: Supabase requires Realtime to be explicitly enabled for each table. Fixed by running: `ALTER PUBLICATION supabase_realtime ADD TABLE bookmarks;`
-2. **RLS Filter Missing**: Realtime subscriptions need to respect RLS. Added user_id filter to subscription: `filter: \`user_id=eq.${user.id}\``
+Simplified the authentication flow by letting Supabase handle the entire OAuth exchange automatically.
 
-### 4. TypeScript Build Errors with React Components
-**Problem**: Custom hooks returning JSX components caused TypeScript compilation failures during build process.
+* Removed custom callback route
+* Allowed Supabase to redirect directly to the dashboard
+* Eliminated session management complexity
+* Reduced authentication errors completely
 
-**Solution**: Separated component logic from hooks. Moved JSX components to dedicated component files and kept hooks focused on state management only. This improved code organization and eliminated build errors.
+---
 
-### 5. Environment Variables Not Loading in Production
-**Problem**: Application worked locally but failed in production with "undefined" Supabase client errors.
+## 2️⃣ Row Level Security (RLS) Not Working
 
-**Solution**: 
-- Verified environment variables were properly set in Vercel dashboard
-- Ensured all Supabase variables had `NEXT_PUBLIC_` prefix for client-side access
-- Added environment variable validation in the Supabase client initialization
+### Problem
 
-### 6. Mobile Responsiveness Issues
-**Problem**: Dashboard layout broke on mobile devices with horizontal scrolling and overlapping elements.
+Users could see each other's bookmarks despite implementing RLS policies.
+Policies were written correctly but were not being enforced.
 
-**Solution**: Implemented mobile-first responsive design:
-- Added proper viewport meta tag
-- Used Tailwind's responsive utilities (`sm:`, `md:`, `lg:`)
-- Converted fixed widths to responsive containers
-- Added mobile-specific navigation patterns
+### Solution
 
-### 7. Performance Issues with Large Bookmark Lists
-**Problem**: Application became slow when users had 50+ bookmarks due to excessive re-renders.
+Discovered that RLS was not enabled on the `bookmarks` table.
 
-**Solution**: Implemented several optimizations:
-- Added `React.memo()` to bookmark list items
-- Used `useCallback()` for event handlers
-- Implemented virtual scrolling for large lists
-- Added debounced search functionality
+```sql
+ALTER TABLE bookmarks ENABLE ROW LEVEL SECURITY;
+```
 
-### 8. Session Persistence Issues
-**Problem**: Users were logged out when refreshing the page or reopening the browser.
+Also learned that RLS policies must be explicitly defined for each operation:
 
-**Solution**: Properly configured Supabase session persistence:
-```typescript
+* `SELECT`
+* `INSERT`
+* `UPDATE`
+* `DELETE`
+
+A single policy does **not** cover all operations.
+
+---
+
+##  Real-time Subscriptions Not Firing
+
+### Problem
+
+Database changes were not triggering real-time updates across browser tabs.
+No console errors, but subscriptions remained silent.
+
+### Solution
+
+Two root causes were identified:
+
+#### 1. Replication Not Enabled
+
+Realtime must be enabled explicitly for each table.
+
+```sql
+ALTER PUBLICATION supabase_realtime ADD TABLE bookmarks;
+```
+
+#### 2. RLS Filter Missing
+
+Realtime subscriptions must respect RLS policies.
+
+```ts
+filter: `user_id=eq.${user.id}`
+```
+
+---
+
+##  TypeScript Build Errors with React Components
+
+### Problem
+
+Custom hooks returning JSX components caused TypeScript build failures.
+
+### Solution
+
+* Separated component logic from hooks
+* Moved JSX to dedicated component files
+* Kept hooks focused only on state management
+
+This improved code organization and resolved compilation errors.
+
+---
+
+##   Environment Variables Not Loading in Production
+
+### Problem
+
+App worked locally but failed in production with `"undefined" Supabase client` errors.
+
+### Solution
+
+* Verified environment variables in the Vercel dashboard
+* Ensured all client-side variables had the `NEXT_PUBLIC_` prefix
+* Added environment variable validation during Supabase client initialization
+
+---
+
+##  Mobile Responsiveness Issues
+
+### Problem
+
+Dashboard layout broke on mobile devices:
+
+* Horizontal scrolling
+* Overlapping elements
+
+### Solution
+
+Implemented mobile-first responsive design:
+
+* Added proper viewport meta tag
+* Used Tailwind responsive utilities (`sm:`, `md:`, `lg:`)
+* Converted fixed widths to responsive containers
+* Implemented mobile-friendly navigation
+
+---
+
+## 7️⃣ Performance Issues with Large Bookmark Lists
+
+### Problem
+
+App became slow when users had 50+ bookmarks due to excessive re-renders.
+
+### Solution
+
+Implemented performance optimizations:
+
+* Added `React.memo()` to bookmark items
+* Used `useCallback()` for handlers
+* Implemented virtual scrolling
+* Added debounced search functionality
+
+---
+
+## 8️⃣ Session Persistence Issues
+
+### Problem
+
+Users were logged out after refreshing or reopening the browser.
+
+### Solution
+
+Configured Supabase session persistence correctly:
+
+```ts
 export const supabase = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -281,6 +379,7 @@ export const supabase = createBrowserClient(
 )
 ```
 
+---
 
 ### Key Learnings:
 - **RLS is Critical**: Security policies must be thoroughly tested with different user scenarios
