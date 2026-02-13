@@ -49,11 +49,11 @@ Follow `SETUP.md` for:
 
 A modern, real-time bookmark management application built with Next.js and Supabase. This application demonstrates secure user authentication, private data management, and real-time synchronization across multiple browser tabs.
 
-## 🚀 Live Demo
+##   Live Demo
 
 [https://smart-bookmark-app.vercel.app](https://smart-bookmark-app.vercel.app)
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **Frontend**: Next.js 16 (App Router), TypeScript, Tailwind CSS
 - **Backend**: Supabase (PostgreSQL Database, Authentication, Realtime)
@@ -61,7 +61,7 @@ A modern, real-time bookmark management application built with Next.js and Supab
 - **Deployment**: Vercel
 - **State Management**: React Hooks, Real-time Subscriptions
 
-## ✨ Key Features
+##  Key Features
 
 ###  Secure Authentication
 - **Google OAuth Only**: No email/password authentication
