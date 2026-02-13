@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import Toast, { ToastType } from "@/components/Toast"
+import { ReactNode } from "react"
+import { ToastType } from "@/components/Toast"
+import Toast from "@/components/Toast"
 
 interface ToastMessage {
   id: string
@@ -23,7 +25,7 @@ export function useToast() {
     setToasts(prev => prev.filter(toast => toast.id !== id))
   }, [])
 
-  const ToastContainer = useCallback(() => {
+  const ToastContainer = useCallback((): ReactNode => {
     return (
       <>
         {toasts.map((toast) => (

@@ -137,7 +137,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm flex items-center">
-              © {currentYear} SmartMarks. Made with <Heart className="w-4 h-4 mx-1 text-red-500" /> for bookmark lovers.
+              © {currentYear} SmartMarks for bookmark  customers.
             </p>
             <div className="flex items-center space-x-6 mt-4 md:mt-0">
               <span className="text-gray-400 text-sm">Status: All systems operational</span>
