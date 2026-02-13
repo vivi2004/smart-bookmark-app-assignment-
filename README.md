@@ -236,7 +236,84 @@ npm run type-check   # Run TypeScript compiler
 - Check environment variables are properly configured
 - Ensure Supabase CORS settings allow your domain
 
-##   Performance Optimizations
+
+
+# � Development Challenges & Solutions
+
+### 1. OAuth Callback Configuration Issues
+**Problem**: Initially used a custom `/auth/callback` route with `exchangeCodeForSession`, which caused "Authentication Error" pages and session inconsistencies.
+
+**Solution**: Simplified the authentication flow by letting Supabase handle the entire OAuth exchange automatically. Removed custom callback route and allowed Supabase to redirect directly back to the dashboard. This eliminated session management complexity and reduced authentication errors by 100%.
+
+### 2. Row Level Security (RLS) Not Working
+**Problem**: Users could see each other's bookmarks despite implementing RLS policies. The policies were correctly written but weren't being enforced.
+
+**Solution**: Discovered that RLS wasn't enabled on the bookmarks table. Fixed by running `ALTER TABLE bookmarks ENABLE ROW LEVEL SECURITY;`. Also learned that RLS policies must be explicit for each operation (SELECT, INSERT, UPDATE, DELETE) - a single policy doesn't cover all operations.
+
+### 3. Real-time Subscriptions Not Firing
+**Problem**: Database changes weren't triggering real-time updates across browser tabs. No errors in console, but subscriptions remained silent.
+
+**Solution**: Found two root causes:
+1. **Replication Not Enabled**: Supabase requires Realtime to be explicitly enabled for each table. Fixed by running: `ALTER PUBLICATION supabase_realtime ADD TABLE bookmarks;`
+2. **RLS Filter Missing**: Realtime subscriptions need to respect RLS. Added user_id filter to subscription: `filter: \`user_id=eq.${user.id}\``
+
+### 4. TypeScript Build Errors with React Components
+**Problem**: Custom hooks returning JSX components caused TypeScript compilation failures during build process.
+
+**Solution**: Separated component logic from hooks. Moved JSX components to dedicated component files and kept hooks focused on state management only. This improved code organization and eliminated build errors.
+
+### 5. Environment Variables Not Loading in Production
+**Problem**: Application worked locally but failed in production with "undefined" Supabase client errors.
+
+**Solution**: 
+- Verified environment variables were properly set in Vercel dashboard
+- Ensured all Supabase variables had `NEXT_PUBLIC_` prefix for client-side access
+- Added environment variable validation in the Supabase client initialization
+
+### 6. Mobile Responsiveness Issues
+**Problem**: Dashboard layout broke on mobile devices with horizontal scrolling and overlapping elements.
+
+**Solution**: Implemented mobile-first responsive design:
+- Added proper viewport meta tag
+- Used Tailwind's responsive utilities (`sm:`, `md:`, `lg:`)
+- Converted fixed widths to responsive containers
+- Added mobile-specific navigation patterns
+
+### 7. Performance Issues with Large Bookmark Lists
+**Problem**: Application became slow when users had 50+ bookmarks due to excessive re-renders.
+
+**Solution**: Implemented several optimizations:
+- Added `React.memo()` to bookmark list items
+- Used `useCallback()` for event handlers
+- Implemented virtual scrolling for large lists
+- Added debounced search functionality
+
+### 8. Session Persistence Issues
+**Problem**: Users were logged out when refreshing the page or reopening the browser.
+
+**Solution**: Properly configured Supabase session persistence:
+```typescript
+export const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+    }
+  }
+)
+```
+
+
+### Key Learnings:
+- **RLS is Critical**: Security policies must be thoroughly tested with different user scenarios
+- **Realtime Requires Setup**: Unlike basic CRUD operations, real-time features need explicit configuration
+- **Environment Management**: Production deployments require careful environment variable handling
+- **Mobile-First Approach**: Responsive design should be considered from the start, not added as an afterthought
+- **Performance Monitoring**: Regular performance testing prevents user experience degradation
+
+## �📈 Performance Optimizations
 
 - **Code Splitting**: Automatic route-based code splitting
 - **Image Optimization**: Next.js Image component for lazy loading
@@ -244,7 +321,7 @@ npm run type-check   # Run TypeScript compiler
 - **Caching**: Supabase edge caching for frequently accessed data
 - **Bundle Analysis**: Regular bundle size monitoring
 
-##  Security Features
+## 🔒 Security Features
 
 - **Row Level Security**: Database-level access control
 - **JWT Authentication**: Secure token-based authentication
